@@ -1,6 +1,6 @@
 package com.example.demo.entity
 
-import com.example.demo.PersonRepo
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -8,7 +8,7 @@ import javax.persistence.*
 open class PersonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    open var id: Long? = null
+    open var personId: Long? = null
     open var name:String? = null
     open var surName: String? = null
     open var age:Long?=null
@@ -17,20 +17,24 @@ open class PersonEntity {
     open var phoneNumber: String? = null
     open var descriptionStatus: String? = null
 
+    @OneToOne(fetch = FetchType.LAZY)
+    open var business:BusinessEntity? = null
+
     @ManyToMany
     open val friends: MutableList<PersonEntity>? = null
 
     constructor(
-        id: Long?,
+        personId: Long?,
         name: String?,
         surName: String?,
         age: Long?,
         country: String?,
         city: String?,
         phoneNumber: String?,
-        descriptionStatus: String?
+        descriptionStatus: String?,
+        business: BusinessEntity?
     ) {
-        this.id = id
+        this.personId = personId
         this.name = name
         this.surName = surName
         this.age = age
@@ -38,7 +42,9 @@ open class PersonEntity {
         this.city = city
         this.phoneNumber = phoneNumber
         this.descriptionStatus = descriptionStatus
+        this.business = business
     }
+
 
     override fun equals(other: Any?): Boolean {
         return super.equals(other)

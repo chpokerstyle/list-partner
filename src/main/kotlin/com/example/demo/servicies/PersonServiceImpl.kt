@@ -1,11 +1,17 @@
 package com.example.demo.servicies
 
-import com.example.demo.PersonRepo
+import com.example.demo.entity.BusinessEntity
+import com.example.demo.repositories.PersonRepo
 import com.example.demo.entity.PersonEntity
+import com.example.demo.repositories.BusinessRepo
 import org.springframework.stereotype.Service
+import org.springframework.web.bind.annotation.GetMapping
 
 @Service
-class PersonServiceImpl(private val personRepo: PersonRepo):PersonService {
+class PersonServiceImpl(private val personRepo: PersonRepo,
+                        private val businessService: BusinessService,
+                        private val businessRepo: BusinessRepo
+                        ):PersonService {
     override fun createPerson(personEntity: PersonEntity) {
         personRepo.save(personEntity)
     }
@@ -41,5 +47,22 @@ class PersonServiceImpl(private val personRepo: PersonRepo):PersonService {
         me.friends!!.remove(friend)
         personRepo.save(me)
     }
+
+    override fun createBusiness(myId: Long, businessEntity: BusinessEntity) {
+            //код работает, но зацикливается
+        var person = personRepo.getById(myId)
+        person.business = businessEntity
+        businessRepo.save(businessEntity)
+        personRepo.save(person)
+        businessEntity.businessman = person
+
+//        var person = personRepo.getById(myId)
+//        person.business = businessEntity
+//        businessRepo.save(businessEntity)
+//        personRepo.save(person)
+//        businessEntity.businessman = person
+//        businessService.edit(businessEntity)
+    }
+
 
 }

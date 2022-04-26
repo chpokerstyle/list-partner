@@ -1,5 +1,6 @@
 package com.example.demo.servicies
 
+import com.example.demo.entity.BusinessEntity
 import com.example.demo.entity.PersonEntity
 
 interface PersonService {
@@ -11,4 +12,5 @@ interface PersonService {
     fun getAllPerson():List<PersonEntity>
     fun addFriend(personId:Long, myId:Long)
     fun deleteFriend(personId: Long, myId: Long)
+    fun createBusiness(myId: Long, businessEntity: BusinessEntity)
 }

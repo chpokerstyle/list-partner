@@ -1,6 +1,8 @@
 package com.example.demo.controllers
 
+import com.example.demo.entity.BusinessEntity
 import com.example.demo.entity.PersonEntity
+import com.example.demo.servicies.BusinessService
 import com.example.demo.servicies.PersonService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -9,7 +11,8 @@ import javax.websocket.server.PathParam
 
 @RestController
 @RequestMapping("person")
-class PersonController(private val service: PersonService) {
+class PersonController(private val service: PersonService,
+                       private val businessService: BusinessService) {
 
     @GetMapping("all")
     fun getAllPersons() = service.getAllPerson()
@@ -31,5 +34,15 @@ class PersonController(private val service: PersonService) {
     @PostMapping("/delete/{myId}/{friendId}")
     fun deleteFriend (@PathVariable personId: Long,@PathVariable myId:Long){
         service.deleteFriend(personId, myId)
+    }
+
+    @PostMapping("create-business/{myId}")
+    fun createBusiness(@PathVariable myId: Long, @RequestBody businessEntity: BusinessEntity){
+        service.createBusiness(myId, businessEntity)
+    }
+
+    @GetMapping("business/all")
+    fun getAllBusiness(): List<BusinessEntity> {
+        return businessService.getAllBusiness()
     }
 }
