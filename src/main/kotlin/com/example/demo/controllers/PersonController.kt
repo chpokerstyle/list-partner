@@ -1,9 +1,7 @@
 package com.example.demo.controllers
 
-import com.example.demo.dto.PersonDto
 import com.example.demo.entity.PersonEntity
 import com.example.demo.servicies.PersonService
-import com.fasterxml.jackson.annotation.JsonValue
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -22,7 +20,7 @@ class PersonController(private val service: PersonService) {
             service.createPerson(personEntity)
             return ResponseEntity.ok(HttpStatus.OK)
         }
-        return ResponseEntity.ok(HttpStatus.BAD_REQUEST)
+        return ResponseEntity.badRequest().build()
     }
 
     @PostMapping("add/{personId}/{myId}")
