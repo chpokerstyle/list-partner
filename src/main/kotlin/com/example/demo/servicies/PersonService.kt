@@ -3,7 +3,7 @@ package com.example.demo.servicies
 import com.example.demo.entity.BusinessEntity
 import com.example.demo.entity.PersonEntity
 
-interface PersonService {
+interface PersonService  {
 
     fun createPerson(personEntity: PersonEntity)
     fun updatePerson(personEntity: PersonEntity)
